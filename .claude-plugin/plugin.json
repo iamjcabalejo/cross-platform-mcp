@@ -1,0 +1,62 @@
+{
+  "name": "mcp-config-plugin",
+  "version": "1.0.0",
+  "description": "Claude Code plugin: commands, agents, skills, and rules synced from .cursor and tailored for Claude Code",
+  "commands": [
+    { "name": "new-task", "path": ".claude/commands/new-task.md", "description": "Analyze code for performance issues and suggest optimizations" },
+    { "name": "agents-md-generate", "path": ".claude/commands/misc/agents-md-generate.md", "description": "Generate AGENTS.md file documenting project coding patterns, structure, and standards" },
+    { "name": "code-optimize", "path": ".claude/commands/misc/code-optimize.md", "description": "Optimize code for performance" },
+    { "name": "code-cleanup", "path": ".claude/commands/misc/code-cleanup.md", "description": "Clean up and refactor code" },
+    { "name": "feature-plan", "path": ".claude/commands/misc/feature-plan.md", "description": "Plan new feature implementation" },
+    { "name": "lint", "path": ".claude/commands/misc/lint.md", "description": "Run linting and fix issues" },
+    { "name": "docs-generate", "path": ".claude/commands/misc/docs-generate.md", "description": "Generate documentation" },
+    { "name": "api-new", "path": ".claude/commands/api/api-new.md", "description": "Create new API endpoint" },
+    { "name": "api-test", "path": ".claude/commands/api/api-test.md", "description": "Test API endpoints" },
+    { "name": "api-protect", "path": ".claude/commands/api/api-protect.md", "description": "Add API protection and validation" },
+    { "name": "component-new", "path": ".claude/commands/ui/component-new.md", "description": "Create new React component" },
+    { "name": "page-new", "path": ".claude/commands/ui/page-new.md", "description": "Create new Next.js page" },
+    { "name": "types-gen", "path": ".claude/commands/supabase/types-gen.md", "description": "Generate Supabase TypeScript types" },
+    { "name": "edge-function-new", "path": ".claude/commands/supabase/edge-function-new.md", "description": "Create new Supabase Edge Function" },
+    { "name": "commit-best", "path": ".claude/commands/git/commit-best.md", "description": "Create a well-structured commit with proper message and push" }
+  ],
+  "agents": [
+    { "name": "tech-stack-researcher", "path": ".claude/agents/tech-stack-researcher.md", "description": "Research and recommend technology choices for feature development" },
+    { "name": "backend-architect", "path": ".claude/agents/backend-architect.md", "description": "Design reliable backend systems with focus on data integrity, security, and fault tolerance" },
+    { "name": "deep-research-agent", "path": ".claude/agents/deep-research-agent.md", "description": "Specialist for comprehensive research with adaptive strategies and intelligent exploration" },
+    { "name": "frontend-architect", "path": ".claude/agents/frontend-architect.md", "description": "Create accessible, performant user interfaces with focus on user experience and modern frameworks" },
+    { "name": "learning-guide", "path": ".claude/agents/learning-guide.md", "description": "Teach programming concepts and explain code with focus on understanding through progressive learning" },
+    { "name": "performance-engineer", "path": ".claude/agents/performance-engineer.md", "description": "Optimize system performance through measurement-driven analysis and bottleneck elimination" },
+    { "name": "refactoring-expert", "path": ".claude/agents/refactoring-expert.md", "description": "Improve code quality and reduce technical debt through systematic refactoring and clean code principles" },
+    { "name": "requirements-analyst", "path": ".claude/agents/requirements-analyst.md", "description": "Transform ambiguous project ideas into concrete specifications through systematic requirements discovery" },
+    { "name": "security-engineer", "path": ".claude/agents/security-engineer.md", "description": "Identify security vulnerabilities and ensure compliance with security standards and best practices" },
+    { "name": "system-architect", "path": ".claude/agents/system-architect.md", "description": "Design scalable system architecture with focus on maintainability and long-term technical decisions" },
+    { "name": "technical-writer", "path": ".claude/agents/technical-writer.md", "description": "Create clear, comprehensive technical documentation tailored to specific audiences with focus on usability" },
+    { "name": "e2e-runner", "path": ".claude/agents/e2e-runner.md", "description": "Design and execute best-in-class end-to-end tests with focus on reliability, coverage, and maintainability" },
+    { "name": "database-expert", "path": ".claude/agents/database-expert.md", "description": "Optimize queries and ensure data access follows best practices with deep DBA expertise" },
+    { "name": "mcp-builder-expert", "path": ".claude/agents/mcp-builder-expert.md", "description": "Design and implement custom MCP servers tailored for systems or apps with protocol, transport, and deployment expertise" }
+  ],
+  "skills": [
+    { "name": "api-design-patterns", "path": ".claude/skills/api-design-patterns", "description": "Apply RESTful and API design best practices for endpoints, error handling, and validation" },
+    { "name": "api-testing", "path": ".claude/skills/api-testing", "description": "Structure and write API tests covering success, validation, auth, and error cases" },
+    { "name": "accessibility-checklist", "path": ".claude/skills/accessibility-checklist", "description": "Verify WCAG 2.1 AA compliance for UI components" },
+    { "name": "e2e-playwright", "path": ".claude/skills/e2e-playwright", "description": "Write reliable Playwright E2E tests with Page Object Model and stable selectors" },
+    { "name": "security-audit", "path": ".claude/skills/security-audit", "description": "Perform OWASP-aligned security checks on code and APIs" },
+    { "name": "refactoring-checklist", "path": ".claude/skills/refactoring-checklist", "description": "Apply safe refactoring steps with behavior preservation" },
+    { "name": "requirements-discovery", "path": ".claude/skills/requirements-discovery", "description": "Structure requirements discovery and produce PRDs, user stories, and acceptance criteria" },
+    { "name": "docs-structure", "path": ".claude/skills/docs-structure", "description": "Structure technical documentation for APIs, guides, and README" },
+    { "name": "performance-profiling", "path": ".claude/skills/performance-profiling", "description": "Measure before optimizing; identify bottlenecks with data" },
+    { "name": "code-review", "path": ".claude/skills/code-review", "description": "Review code for correctness, security, maintainability, and style" },
+    { "name": "feature-planning", "path": ".claude/skills/feature-planning", "description": "Break features into implementation tasks for backend, frontend, and E2E subagents" },
+    { "name": "postgresql", "path": ".claude/skills/postgresql", "description": "Apply PostgreSQL best practices for schema design, indexing, vector search (pgvector), and RAG pipelines" },
+    { "name": "nosql-databases", "path": ".claude/skills/nosql-databases", "description": "Apply NoSQL best practices for MongoDB, Convex, and document databases" },
+    { "name": "mcp-builder", "path": ".claude/skills/mcp-builder", "description": "Apply MCP protocol and SDK best practices for tools, resources, prompts, and server structure" },
+    { "name": "mcp-deployment", "path": ".claude/skills/mcp-deployment", "description": "Deploy MCP over Streamable HTTP with session handling and client URL; hosting and troubleshooting" }
+  ],
+  "rules": [
+    { "name": "core-standards", "path": ".claude/rules/core-standards.mdc", "description": "Core coding standards applied to all sessions" },
+    { "name": "typescript", "path": ".claude/rules/typescript.mdc", "description": "TypeScript conventions" },
+    { "name": "react", "path": ".claude/rules/react.mdc", "description": "React component patterns" },
+    { "name": "api-routes", "path": ".claude/rules/api-routes.mdc", "description": "API route conventions" },
+    { "name": "e2e-tests", "path": ".claude/rules/e2e-tests.mdc", "description": "E2E test patterns" }
+  ]
+}

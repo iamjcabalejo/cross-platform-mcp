@@ -1,0 +1,34 @@
+{
+  "name": "cursor-config-mcp",
+  "version": "1.0.0",
+  "description": "MCP server that exposes Cursor, Claude Code, and Codex commands, skills, agents, rules, and hooks as resources and tools",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:http": "node dist/server-http.js",
+    "dev": "tsx src/index.ts",
+    "dev:http": "tsx src/server-http.ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "cursor",
+    "claude",
+    "codex",
+    "modelcontextprotocol"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
