@@ -2,7 +2,7 @@ import type { Resource } from "@modelcontextprotocol/sdk/types.js";
 /**
  * Supported AI coding environments. Each has its own directory layout and conventions.
  */
-export type Platform = "cursor" | "claude" | "codex";
+export type Platform = "cursor" | "claude" | "codex" | "copilot";
 export type Category = "command" | "skill" | "agent" | "rule" | "hook";
 /** Resource URI scheme: config://{platform}/{category}/{id} */
 export declare const CONFIG_SCHEME = "config";

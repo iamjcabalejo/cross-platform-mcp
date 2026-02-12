@@ -4,11 +4,13 @@ import { CONFIG_SCHEME } from "./types.js";
 import { createCursorBackend } from "./cursor.js";
 import { createClaudeBackend } from "./claude.js";
 import { createCodexBackend } from "./codex.js";
+import { createCopilotBackend } from "./copilot.js";
 
 const BACKENDS: PlatformBackend[] = [
   createCursorBackend(),
   createClaudeBackend(),
   createCodexBackend(),
+  createCopilotBackend(),
 ];
 
 /**
@@ -54,7 +56,7 @@ export function readResource(uriObj: URL): ReadResourceResult {
         {
           uri: uriObj.href,
           mimeType: "text/plain",
-          text: `Unknown platform: ${platform}. Supported: cursor, claude, codex.`,
+          text: `Unknown platform: ${platform}. Supported: cursor, claude, codex, copilot.`,
         },
       ],
     };

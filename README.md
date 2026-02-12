@@ -1,13 +1,13 @@
 # Cross-Platform Config MCP
 
-A **Model Context Protocol (MCP)** server and config bundle that exposes **commands**, **skills**, **agents**, **rules**, and **hooks** from **Cursor**, **Claude Code**, and **Codex** as MCP resources and tools. One server works across all three AI coding environments so any MCP client can discover and read this project’s configuration from any supported platform.
+A **Model Context Protocol (MCP)** server and config bundle that exposes **commands**, **skills**, **agents**, **rules**, and **hooks** from **Cursor**, **Claude Code**, **Codex**, and **GitHub Copilot** as MCP resources and tools. One server works across all four AI coding environments so any MCP client can discover and read this project’s configuration from any supported platform.
 
 ---
 
 ## What This Project Is For
 
-- **Share one config across Cursor, Claude Code, and Codex** — Define commands, agents, skills, and rules once and use them in multiple AI coding tools.
-- **Expose config via MCP** — The bundled MCP server lets any MCP client (Cursor, Claude, Codex, or others) list and read your commands, skills, agents, rules, and hooks by URI.
+- **Share one config across Cursor, Claude Code, Codex, and GitHub Copilot** — Define commands, agents, skills, and rules once and use them in multiple AI coding tools.
+- **Expose config via MCP** — The bundled MCP server lets any MCP client (Cursor, Claude, Codex, Copilot, or others) list and read your commands, skills, agents, rules, and hooks by URI.
 - **Use this repo as a Cursor plugin** — Install as a Cursor plugin to get 15 slash commands, 14 specialist agents, 15 skills, 5 rules, and hooks for modern web development (Next.js, React, TypeScript, API, Supabase, E2E).
 - **Use config from another workspace** — Point the MCP server at this repo (or another repo using this layout) and use its config from a different project or IDE.
 
@@ -17,14 +17,15 @@ A **Model Context Protocol (MCP)** server and config bundle that exposes **comma
 
 This repository contains:
 
-1. **Config for three platforms**  
+1. **Config for four platforms**  
    - **Cursor**: `.cursor/` (commands, agents, skills, rules, hooks) and `.cursor-plugin/plugin.json`.  
    - **Claude Code**: `.claude/` (commands, agents, skills, rules) and `.claude-plugin/plugin.json`.  
-   - **Codex**: `.agents/skills/`, `.codex/rules/`, and root `AGENTS.md`.
+   - **Codex**: `.agents/skills/`, `.codex/rules/`, and root `AGENTS.md`.  
+   - **GitHub Copilot**: `.github/agents/` (custom agents as `*.agent.md`; commands and skills are used via MCP tools).
 
 2. **An MCP server** (`mcp-server/`)  
-   - Discovers config from Cursor, Claude, and Codex directory layouts.  
-   - Exposes **MCP resources** (URIs like `config://cursor/command/misc/feature-plan`) and **MCP tools** (e.g. `list_commands`, `get_skill`).  
+   - Discovers config from Cursor, Claude, Codex, and GitHub Copilot directory layouts.  
+   - Exposes **MCP resources** (URIs like `config://cursor/command/misc/feature-plan`, `config://copilot/agent/backend-architect`) and **MCP tools** (e.g. `list_commands`, `get_skill`, `list_agents`, `get_agent`).  
    - Can run over stdio or **Streamable HTTP** for remote clients.
 
 3. **A Cursor plugin** (`.cursor-plugin/`)  
@@ -40,18 +41,18 @@ The Config MCP server exposes these **tools** so clients can discover and read c
 
 | Tool | Description |
 |------|-------------|
-| **list_commands** | List all slash commands (Cursor, Claude). Each item includes `platform`, `uri`, `name`, `description`. |
-| **list_agents** | List all agents (Cursor, Claude; Codex uses `AGENTS.md` as a single agent doc). |
-| **list_skills** | List all skills across platforms. |
+| **list_commands** | List all slash commands (Cursor, Claude). Copilot has no native commands; use get_command via MCP. |
+| **list_agents** | List all agents (Cursor, Claude, Codex, GitHub Copilot). |
+| **list_skills** | List all skills across platforms. Copilot can use get_skill via MCP. |
 | **list_rules** | List all rules across platforms. |
 | **list_hooks** | List hooks (Cursor only). |
-| **get_command** | Get a command by id (e.g. `misc/feature-plan`). Optional `platform`: `cursor`, `claude`, `codex`. |
-| **get_agent** | Get an agent by id. Optional `platform`. |
+| **get_command** | Get a command by id (e.g. `misc/feature-plan`). Optional `platform`: `cursor`, `claude`, `codex`, `copilot`. |
+| **get_agent** | Get an agent by id. Optional `platform`: `cursor`, `claude`, `codex`, `copilot`. |
 | **get_skill** | Get a skill by id (e.g. `api-design-patterns`). Optional `platform`. |
 | **get_rule** | Get a rule by id. Optional `platform`. |
-| **get_hook** | Get a hook by id (e.g. `format`, `audit`). Optional `platform` (Cursor only). |
+| **get_hook** | Get a hook by id (e.g. `format`, `audit`). Cursor only; use `platform: cursor`. |
 
-Tools return items with a `platform` field so you can tell which environment (cursor, claude, codex) each entry came from.
+Tools return items with a `platform` field so you can tell which environment (cursor, claude, codex, copilot) each entry came from.
 
 ---
 
@@ -106,7 +107,7 @@ Skills are reusable workflows (e.g. API design, testing, refactoring). They live
 
 ## Agents (Specialist Roles)
 
-Agents are specialist roles you can adopt for specific tasks. Definitions live in `.cursor/agents/` and `.claude/agents/`; Codex uses `AGENTS.md` for project-level agent guidance.
+Agents are specialist roles you can adopt for specific tasks. Definitions live in `.cursor/agents/`, `.claude/agents/`, and `.github/agents/*.agent.md` (GitHub Copilot); Codex uses `AGENTS.md` for project-level agent guidance. Copilot also includes a **config-helper** agent that uses Config MCP tools to run command-style workflows and apply skills.
 
 | Agent | Description |
 |-------|-------------|
@@ -171,7 +172,12 @@ Hooks run at specific lifecycle points in Cursor. They are listed and readable v
 - **As config**: Use `AGENTS.md` at repo root and/or `.agents/skills/` and `.codex/rules/`. Codex uses these for project and skill-level guidance.
 - **As MCP client**: Configure Codex to use this MCP server (stdio or URL). Set `CONFIG_PATH` or `CODEX_CONFIG_PATH` to the repo root; optionally set `CODEX_HOME` for user-level skills. Codex can list and get commands, agents, skills, and rules via the MCP tools.
 
-### 4. **Any other MCP-capable client**
+### 4. **GitHub Copilot**
+
+- **As config**: Use `.github/agents/` with `*.agent.md` files (custom agents). Copilot does not have native slash commands or skills; use the **config-helper** agent or the Config MCP tools (`list_commands`, `get_command`, `list_skills`, `get_skill`) from within Copilot Chat to run command-style workflows and apply skills.
+- **As MCP client**: Configure Copilot to use this MCP server (e.g. in VS Code with Copilot + MCP). Set `CONFIG_PATH` or `COPILOT_CONFIG_PATH` to the repo root so the server can read `.github/agents/`. Copilot can then list and get agents, and use get_command/get_skill to access Cursor/Claude commands and skills.
+
+### 5. **Any other MCP-capable client**
 
 - Any IDE or tool that supports MCP (e.g. another editor, CLI, or automation) can connect to the Config MCP server via stdio or Streamable HTTP and use the same tools and resources. Set the appropriate `*_CONFIG_PATH` or `CONFIG_PATH` so the server can see the desired platform’s directories.
 
@@ -184,6 +190,7 @@ Hooks run at specific lifecycle points in Cursor. They are listed and readable v
 | **Cursor** | `.cursor/commands/` | `.cursor/agents/` | `.cursor/skills/<name>/SKILL.md` | `.cursor/rules/*.mdc` | `.cursor/hooks/*.sh`, `hooks.json` |
 | **Claude** | `.claude/commands/` | `.claude/agents/` | `.claude/skills/<name>/SKILL.md` | `.claude/rules/*.mdc` or `*.md` | — |
 | **Codex** | — | `AGENTS.md` | `.agents/skills/<name>/SKILL.md`, `$CODEX_HOME/skills/` | `.codex/rules/*.rules` | — |
+| **GitHub Copilot** | via MCP (`get_command`) | `.github/agents/*.agent.md` | via MCP (`get_skill`) | via MCP (`get_rule`) | — |
 
 Detailed platform requirements and paths are in [docs/PLATFORM-REQUIREMENTS.md](docs/PLATFORM-REQUIREMENTS.md).
 
@@ -216,7 +223,7 @@ When you use the Cursor plugin, it can also register these MCP servers (see `.cu
 
 ## Documentation
 
-- [docs/PLATFORM-REQUIREMENTS.md](docs/PLATFORM-REQUIREMENTS.md) — Config layout per platform (Cursor, Claude, Codex).
+- [docs/PLATFORM-REQUIREMENTS.md](docs/PLATFORM-REQUIREMENTS.md) — Config layout per platform (Cursor, Claude, Codex, GitHub Copilot).
 - [mcp-server/README.md](mcp-server/README.md) — MCP server usage, env vars, resources, and tools.
 - [mcp-server/DEPLOYMENT.md](mcp-server/DEPLOYMENT.md) — Deploying the server (e.g. Streamable HTTP).
 - [.cursor-plugin/MCP-SERVERS.md](.cursor-plugin/MCP-SERVERS.md) — MCP servers included in the Cursor plugin and how to add more.

@@ -1,6 +1,6 @@
 import type { ListResourcesResult, ReadResourceResult } from "@modelcontextprotocol/sdk/types.js";
 /**
- * List all resources from every active platform (Cursor, Claude, Codex).
+ * List all resources from every active platform (Cursor, Claude, Codex, GitHub Copilot).
  * URIs use config://{platform}/{category}/{id}.
  */
 export declare function listAllResources(): ListResourcesResult;

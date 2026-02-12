@@ -41,7 +41,7 @@ async function main(): Promise<void> {
   const active = getActiveBackends();
   if (active.length === 0) {
     console.error(
-      `[${SERVER_NAME}] No config found. Set CONFIG_PATH (or CURSOR_CONFIG_PATH / CLAUDE_CONFIG_PATH / CODEX_CONFIG_PATH) to a directory containing .cursor, .claude, or Codex .agents/skills or .codex/rules.`
+      `[${SERVER_NAME}] No config found. Set CONFIG_PATH (or CURSOR_CONFIG_PATH / CLAUDE_CONFIG_PATH / CODEX_CONFIG_PATH / COPILOT_CONFIG_PATH) to a directory containing .cursor, .claude, Codex paths, or .github/agents.`
     );
   } else {
     console.log(`[${SERVER_NAME}] Active platforms: ${active.map((b) => b.platform).join(", ")}`);

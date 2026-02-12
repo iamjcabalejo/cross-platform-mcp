@@ -4,11 +4,13 @@ const CURSOR_DIR = ".cursor";
 const CLAUDE_DIR = ".claude";
 const CODEX_DIR = ".codex";
 const AGENTS_DIR = ".agents";
+const GITHUB_DIR = ".github";
 /** CONFIG_PATH: single root for all platforms; fallback for platform-specific env. */
 const CONFIG_PATH_ENV = "CONFIG_PATH";
 const CURSOR_CONFIG_PATH_ENV = "CURSOR_CONFIG_PATH";
 const CLAUDE_CONFIG_PATH_ENV = "CLAUDE_CONFIG_PATH";
 const CODEX_CONFIG_PATH_ENV = "CODEX_CONFIG_PATH";
+const COPILOT_CONFIG_PATH_ENV = "COPILOT_CONFIG_PATH";
 const CODEX_HOME_ENV = "CODEX_HOME";
 /**
  * Resolves the config root: CONFIG_PATH, then CURSOR_CONFIG_PATH, then process.cwd().
@@ -39,6 +41,10 @@ export function getConfigRootForPlatform(platform) {
             const env = process.env[CODEX_CONFIG_PATH_ENV] ?? process.env[CONFIG_PATH_ENV];
             return env ? path.resolve(env) : process.cwd();
         }
+        case "copilot": {
+            const env = process.env[COPILOT_CONFIG_PATH_ENV] ?? process.env[CONFIG_PATH_ENV];
+            return env ? path.resolve(env) : process.cwd();
+        }
         default:
             return getConfigRoot();
     }
@@ -63,6 +69,10 @@ export function getClaudeDir(configRoot) {
 export function getCodexDir(configRoot) {
     return path.join(configRoot, CODEX_DIR);
 }
+/** Path to .github directory (GitHub Copilot custom agents live under .github/agents). */
+export function getGitHubDir(configRoot) {
+    return path.join(configRoot, GITHUB_DIR);
+}
 /**
  * Whether a directory exists and is a directory.
  */
@@ -85,6 +95,10 @@ export function hasClaudeDir(configRoot) {
 }
 export function hasCodexDir(configRoot) {
     return dirExists(getCodexDir(configRoot));
+}
+/** Whether .github/agents exists and is a directory (GitHub Copilot custom agents). */
+export function hasCopilotAgentsDir(configRoot) {
+    return dirExists(path.join(getGitHubDir(configRoot), "agents"));
 }
 /** .agents/skills under config root (Codex repo skills). */
 export function getAgentsSkillsDir(configRoot) {
@@ -132,6 +146,15 @@ export function getCodexPaths() {
         agentsSkillsDir: getAgentsSkillsDir(root),
         userSkillsDir: path.join(codexHome, "skills"),
         agentsMdPath: path.join(root, "AGENTS.md"),
+    };
+}
+export function getCopilotPaths() {
+    const root = getConfigRootForPlatform("copilot");
+    const githubDir = getGitHubDir(root);
+    return {
+        root,
+        githubDir,
+        agentsDir: path.join(githubDir, "agents"),
     };
 }
 /**

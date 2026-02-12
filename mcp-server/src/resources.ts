@@ -2,7 +2,7 @@ import type { ListResourcesResult, ReadResourceResult } from "@modelcontextproto
 import { listAllResources as listAllFromPlatforms, readResource as readFromPlatforms } from "./platforms/index.js";
 
 /**
- * List all resources from every active platform (Cursor, Claude, Codex).
+ * List all resources from every active platform (Cursor, Claude, Codex, GitHub Copilot).
  * URIs use config://{platform}/{category}/{id}.
  */
 export function listAllResources(): ListResourcesResult {

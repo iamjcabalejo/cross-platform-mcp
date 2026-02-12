@@ -2,10 +2,12 @@ import { CONFIG_SCHEME } from "./types.js";
 import { createCursorBackend } from "./cursor.js";
 import { createClaudeBackend } from "./claude.js";
 import { createCodexBackend } from "./codex.js";
+import { createCopilotBackend } from "./copilot.js";
 const BACKENDS = [
     createCursorBackend(),
     createClaudeBackend(),
     createCodexBackend(),
+    createCopilotBackend(),
 ];
 /**
  * Returns all backends that have config present (e.g. .cursor, .claude, or Codex paths).
@@ -48,7 +50,7 @@ export function readResource(uriObj) {
                 {
                     uri: uriObj.href,
                     mimeType: "text/plain",
-                    text: `Unknown platform: ${platform}. Supported: cursor, claude, codex.`,
+                    text: `Unknown platform: ${platform}. Supported: cursor, claude, codex, copilot.`,
                 },
             ],
         };

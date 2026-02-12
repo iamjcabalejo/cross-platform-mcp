@@ -6,7 +6,7 @@ export declare function getConfigRoot(): string;
 /**
  * Config root for a given platform. Uses platform-specific env if set, else CONFIG_PATH / cwd.
  */
-export declare function getConfigRootForPlatform(platform: "cursor" | "claude" | "codex"): string;
+export declare function getConfigRootForPlatform(platform: "cursor" | "claude" | "codex" | "copilot"): string;
 /** Codex user/home directory (e.g. ~/.codex). Used for user-level skills. */
 export declare function getCodexHome(): string;
 /**
@@ -15,12 +15,16 @@ export declare function getCodexHome(): string;
 export declare function getCursorDir(configRoot: string): string;
 export declare function getClaudeDir(configRoot: string): string;
 export declare function getCodexDir(configRoot: string): string;
+/** Path to .github directory (GitHub Copilot custom agents live under .github/agents). */
+export declare function getGitHubDir(configRoot: string): string;
 /**
  * Whether .cursor exists and is a directory.
  */
 export declare function hasCursorDir(configRoot: string): boolean;
 export declare function hasClaudeDir(configRoot: string): boolean;
 export declare function hasCodexDir(configRoot: string): boolean;
+/** Whether .github/agents exists and is a directory (GitHub Copilot custom agents). */
+export declare function hasCopilotAgentsDir(configRoot: string): boolean;
 /** .agents/skills under config root (Codex repo skills). */
 export declare function getAgentsSkillsDir(configRoot: string): string;
 export interface CursorPaths {
@@ -51,12 +55,18 @@ export interface CodexPaths {
     userSkillsDir: string;
     agentsMdPath: string;
 }
+export interface CopilotPaths {
+    root: string;
+    githubDir: string;
+    agentsDir: string;
+}
 /**
  * Returns all paths used by the server for Cursor. Does not validate existence.
  */
 export declare function getCursorPaths(): CursorPaths;
 export declare function getClaudePaths(): ClaudePaths;
 export declare function getCodexPaths(): CodexPaths;
+export declare function getCopilotPaths(): CopilotPaths;
 /**
  * Safe read of a file; returns null on any error.
  */
